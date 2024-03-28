@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Xin Zhou">
+
+<title>The impact of monetary incentive on player game performance</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="final_files/libs/clipboard/clipboard.min.js"></script>
+<script src="final_files/libs/quarto-html/quarto.js"></script>
+<script src="final_files/libs/quarto-html/popper.min.js"></script>
+<script src="final_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="final_files/libs/quarto-html/anchor.min.js"></script>
+<link href="final_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="final_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="final_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="final_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="final_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">The impact of monetary incentive on player game performance</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Xin Zhou </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>In this paper we examine the impact of the launch of an incentive program on the game live-streaming website Twitch on the game performance on Speedrun, where game players submit their game performance in which they try to finish a game as fast as possbile. Over the last decade, the rise of live streaming on Twitch has coincided with the growth of Speedrunning. Speedrunners are some of the earliest twitch streamers, while a common streaming theme on Twitch is speedrunning, with the majority of speedrunning records created during a live stream on Twitch. Therefore, we posit that the launch of the incentive program on Twitch could have an impact on Speedrunners’ game performance.</p>
+<p>The incentive program provides opportunities for players to monetize their content on the website. Once players qualify for the program according to the requirements outlined by Twitch, they achieve the Affiliate status. We hypothesize that the incentive program would motivate players to be more engaged in game streaming, as this effect might spill over to their speedrunning activities, leading them to achieve better game performance compared to those who are not affected by the program.</p>
+<p>We expect to see an increase in player motivation right after the incentive program took effect and a further increase after the players eventually achieved the Affiliate status.</p>
+</section>
+<section id="data-overview" class="level2">
+<h2 class="anchored" data-anchor-id="data-overview">Data Overview</h2>
+<p>The data is at player-month level. The key dependent variable is game performance measured in seconds. We have two types of players in our data, affiliates are those players who have a presence on Twitch and eventually joined the incentive program, non-twitch users are those who do not have a presence on Twitch and thus are unlikely to be affected by an incentive program launched on Twitch. We also defined two types of treatment in our data. Treatment 1 is the launch of the incentive program on Twitch, announced on 2017-05-01, which we assume to affect all players on Twitch at the same time. Treatment 2 is the Affiliate status, which players acquired at different times.</p>
+<p>First, we check the number of players in the treatment and control group for Treatment 1, where all units in the treatment group are treated at the same time.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>performance <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(broadcaster_type) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n_distinct</span>(player_id))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  broadcaster_type     n
+  &lt;chr&gt;            &lt;int&gt;
+1 affiliate         2248
+2 non_twitch        1572</code></pre>
+</div>
+</div>
+<p>Our data spans a time window of 26 months, starting from 6 months before the launch of the program, and 19 months after.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(performance<span class="sc">$</span>run_month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        Min.      1st Qu.       Median         Mean      3rd Qu.         Max. 
+"2016-11-01" "2017-05-01" "2017-11-16" "2017-11-15" "2018-06-01" "2018-12-01" </code></pre>
+</div>
+</div>
+<p>Below is a visual representation of treatment timing. For Treatment 1 we can see all units got treated at the same time.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">panelview</span>(best_time_imputed <span class="sc">~</span> D1, <span class="at">data =</span> performance, <span class="at">index =</span> <span class="fu">c</span>(<span class="st">"player_id"</span>,<span class="st">"run_month"</span>), </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">xlab =</span> <span class="st">"Year-Month"</span>, <span class="at">ylab =</span> <span class="st">"player"</span>, <span class="at">display.all =</span> T,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">gridOff =</span> <span class="cn">TRUE</span>, <span class="at">by.timing =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Time is not evenly distributed (possibly due to missing data).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="final_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>For Treatment 2, units were treated in a staggered fashion. There are also some units who never got treated.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">panelview</span>(best_time_imputed <span class="sc">~</span> D2, <span class="at">data =</span> performance, <span class="at">index =</span> <span class="fu">c</span>(<span class="st">"player_id"</span>,<span class="st">"run_month"</span>), </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">xlab =</span> <span class="st">"Year-Month"</span>, <span class="at">ylab =</span> <span class="st">"player"</span>, <span class="at">display.all =</span> T,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">gridOff =</span> <span class="cn">TRUE</span>, <span class="at">by.timing =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Time is not evenly distributed (possibly due to missing data).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="final_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="descriptive-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="descriptive-analysis">Descriptive Analysis</h2>
+<p>We show some model-free evidence of the impact of the incentive program on player game performance.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>top4_performance <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(game_specific, broadcaster_type, run_month) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">best_time =</span> <span class="fu">mean</span>(best_time_imputed, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> run_month, <span class="at">y =</span> best_time, <span class="at">color =</span> broadcaster_type)) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span>  <span class="co"># Increase line thickness</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>game_specific, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span>  <span class="co"># Allow each panel to have its own y scale if needed</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.numeric</span>(launch_date), <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span>  <span class="co"># Highlight the launch date</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span>  <span class="co"># Use a distinct color palette for clarity</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span>  <span class="co"># Use a clean theme with a larger base font size for readability</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Average Best Time by Game and Broadcaster Type"</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Includes a comparison across different months"</span>,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Run Month"</span>,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Average Best Time (seconds)"</span>,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Broadcaster Type"</span>  <span class="co"># Label for the color legend</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>), </span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">face =</span> <span class="st">"bold"</span>),  </span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"gray90"</span>, <span class="at">color =</span> <span class="cn">NA</span>) </span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'game_specific', 'broadcaster_type'. You
+can override using the `.groups` argument.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="final_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We can see that after the program took effect, game performance for Affiliates improved more than that for non Twitch users. Note that different games have different duration, and thus might not be directly comparable. We normalize game performance to the proportion of the starting record.</p>
+</section>
+<section id="model-and-results" class="level2">
+<h2 class="anchored" data-anchor-id="model-and-results">Model and Results</h2>
+<p>We first take a look at the effect of program launch, which happened at the same time for all treated units. After after, we examine the impact of the second treatment, which we define as when players became Twitch Affiliates and were able to monetize their content. We predict that players would get even stronger incentive to improve their game performance. While we assume treatment 1 were adopted at the same time for all treated units, treatment 2 was adopted in a staggered fashion for those players who finally achieve Affiliate status.</p>
+<section id="twfe-treatment-1" class="level3">
+<h3 class="anchored" data-anchor-id="twfe-treatment-1">TWFE: Treatment 1</h3>
+<p>We first estimate a static two-way fixed effect model. We got a coefficient of -0.04, which means on average, after the program took effect, game performance improved 4%.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">=</span> <span class="fu">feols</span>(best_time <span class="sc">~</span> D1<span class="sc">|</span>player_id <span class="sc">+</span> run_month, <span class="at">data =</span> performance)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>OLS estimation, Dep. Var.: best_time
+Observations: 99,320 
+Fixed-effects: player_id: 3,820,  run_month: 26
+Standard-errors: Clustered (player_id) 
+    Estimate Std. Error  t value  Pr(&gt;|t|)    
+D1 -0.041551   0.002557 -16.2525 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.057925     Adj. R2: 0.695925
+                 Within R2: 0.021641</code></pre>
+</div>
+</div>
+</section>
+<section id="dynamic-twfe-treatment-1" class="level3">
+<h3 class="anchored" data-anchor-id="dynamic-twfe-treatment-1">Dynamic TWFE: Treatment 1</h3>
+<p>Now we estimate a dynamic two-way fixed effects and create an event-study plot. The results shows that leading up to the program launch, there is a negative impact on game performance, while after the program took effect, the impact became positive and increasing in magnitude.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>twfe.est <span class="ot">=</span> <span class="fu">feols</span>(best_time <span class="sc">~</span> <span class="fu">i</span>(relative1, treat1, <span class="at">ref =</span> <span class="sc">-</span><span class="dv">1</span>)<span class="sc">|</span>player_id <span class="sc">+</span> run_month, <span class="at">data =</span> performance, <span class="at">cluster =</span> <span class="st">"player_id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The variables 'relative1::-26:treat1', 'relative1::-25:treat1' and eighteen others have been removed because of collinearity (see $collin.var).</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>twfe.output <span class="ot">=</span> <span class="fu">as.matrix</span>(twfe.est<span class="sc">$</span>coeftable)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(twfe.output)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                         Estimate   Std. Error    t value     Pr(&gt;|t|)
+relative1::-6:treat1  0.015434603 0.0021471959   7.188260 7.855435e-13
+relative1::-5:treat1  0.013245755 0.0019927331   6.647029 3.414431e-11
+relative1::-4:treat1  0.010986102 0.0016379839   6.707088 2.277542e-11
+relative1::-3:treat1  0.007991259 0.0011126812   7.181985 8.219646e-13
+relative1::-2:treat1  0.003960702 0.0007051653   5.616700 2.085128e-08
+relative1::0:treat1  -0.004092888 0.0009735673  -4.204012 2.682320e-05
+relative1::1:treat1  -0.008566181 0.0012472867  -6.867852 7.576368e-12
+relative1::2:treat1  -0.012171262 0.0015726727  -7.739221 1.271778e-14
+relative1::3:treat1  -0.016414730 0.0018227169  -9.005639 3.312688e-19
+relative1::4:treat1  -0.017976298 0.0020371144  -8.824393 1.644562e-18
+relative1::5:treat1  -0.020059398 0.0021582405  -9.294329 2.423823e-20
+relative1::6:treat1  -0.023394255 0.0023007779 -10.167976 5.552973e-24
+relative1::7:treat1  -0.026280904 0.0023683383 -11.096769 3.491761e-28
+relative1::8:treat1  -0.030069482 0.0026349334 -11.411856 1.098650e-29
+relative1::9:treat1  -0.032711132 0.0027525559 -11.883912 5.225383e-32
+relative1::10:treat1 -0.036840778 0.0029104134 -12.658263 5.273013e-36
+relative1::11:treat1 -0.038821770 0.0029970846 -12.953178 1.380280e-37
+relative1::12:treat1 -0.040138806 0.0031578187 -12.710928 2.766668e-36
+relative1::13:treat1 -0.042412017 0.0032032267 -13.240404 3.693881e-39
+relative1::14:treat1 -0.045388960 0.0032979633 -13.762725 4.251064e-42
+relative1::15:treat1 -0.048699863 0.0033884933 -14.372129 1.178124e-45
+relative1::16:treat1 -0.051258783 0.0035091977 -14.606981 4.610392e-47
+relative1::17:treat1 -0.052680596 0.0035605630 -14.795580 3.302681e-48
+relative1::18:treat1 -0.055313349 0.0035910283 -15.403206 5.527390e-52
+relative1::19:treat1 -0.055664024 0.0036563737 -15.223833 7.433374e-51
+attr(,"type")
+[1] "Clustered (player_id)"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>twfe.output <span class="ot">=</span> <span class="fu">as.data.frame</span>(twfe.output)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>twfe.output<span class="sc">$</span>Time <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">6</span><span class="sc">:-</span><span class="dv">2</span>),<span class="fu">c</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">19</span>))</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>p.twfe <span class="ot">=</span> <span class="fu">esplot</span>(twfe.output,<span class="at">Period =</span> <span class="st">'Time'</span>,<span class="at">Estimate =</span> <span class="st">'Estimate'</span>,<span class="at">SE =</span> <span class="st">'Std. Error'</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>,<span class="dv">20</span>))</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>p.twfe</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="final_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="fect-estimator" class="level3">
+<h3 class="anchored" data-anchor-id="fect-estimator">FEct Estimator</h3>
+<p>We then employ a fixed effect counterfactual estimator to re-analyze the data. FEct estimators impute counterfactual outcomes for each treated observation by fitting a model using the untreated observations. FEct is a better approach than TWFE in that it solves the negative weighting problem and accounts for heterogeneity in treatment effects across both time and units.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>fect1 <span class="ot">=</span> <span class="fu">fect</span>(best_time <span class="sc">~</span> D1, <span class="at">data =</span> performance, <span class="at">index =</span> <span class="fu">c</span>(<span class="st">"player_id"</span>,<span class="st">"run_month"</span>), </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">method =</span> <span class="st">"ife"</span>, <span class="at">force =</span> <span class="st">"two-way"</span>,<span class="at">se =</span> <span class="cn">TRUE</span>, <span class="at">parallel =</span> <span class="cn">TRUE</span>, <span class="at">nboots =</span> <span class="dv">200</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Parallel computing ...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Bootstrapping for uncertainties ... </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>200 runs</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Cannot use full pre-treatment periods in the F test. The first period is removed.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fect1, <span class="at">main =</span> <span class="st">"Estimated ATT"</span>, <span class="at">ylab =</span> <span class="st">"Effect of Affiliate Program"</span>, </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">cex.main =</span> <span class="fl">0.8</span>, <span class="at">cex.lab =</span> <span class="fl">0.8</span>, <span class="at">cex.axis =</span> <span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="final_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>From the above plot we can see that after the launch of the program, there is a consistent improvement in players’ game performance. Using the print function from the fect package, we get an aggregate ATT, which is similar to what we get from TWFE.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fect1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+fect.formula(formula = best_time ~ D1, data = performance, index = c("player_id", 
+    "run_month"), force = "two-way", method = "ife", se = TRUE, 
+    nboots = 200, parallel = TRUE)
+
+ATT:
+                               ATT     S.E. CI.lower CI.upper p.value
+Tr obs equally weighted   -0.04155 0.002551 -0.04655 -0.03655       0
+Tr units equally weighted -0.04155 0.002551 -0.04655 -0.03655       0</code></pre>
+</div>
+</div>
+</section>
+<section id="twfe-treatment-2" class="level3">
+<h3 class="anchored" data-anchor-id="twfe-treatment-2">TWFE: Treatment 2</h3>
+<p>We get an average ATT of -0.04, which is comparable as the effect of Treatment 1.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">=</span> <span class="fu">feols</span>(best_time <span class="sc">~</span> D2<span class="sc">|</span>player_id <span class="sc">+</span> run_month <span class="sc">+</span> game_specific, <span class="at">data =</span> performance)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>OLS estimation, Dep. Var.: best_time
+Observations: 99,320 
+Fixed-effects: player_id: 3,820,  run_month: 26,  game_specific: 2,381
+Standard-errors: Clustered (player_id) 
+    Estimate Std. Error  t value  Pr(&gt;|t|)    
+D2 -0.039933   0.002525 -15.8133 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.057641     Adj. R2: 0.691199
+                 Within R2: 0.031204</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>twfe.est1 <span class="ot">=</span> <span class="fu">feols</span>(best_time <span class="sc">~</span> <span class="fu">i</span>(relative2, treat2, <span class="at">ref =</span> <span class="sc">-</span><span class="dv">1</span>)<span class="sc">|</span>player_id <span class="sc">+</span> run_month, <span class="at">data =</span> performance, <span class="at">cluster =</span> <span class="st">"player_id"</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>twfe.output1 <span class="ot">=</span> <span class="fu">as.matrix</span>(twfe.est1<span class="sc">$</span>coeftable)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(twfe.output1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                          Estimate   Std. Error    t value     Pr(&gt;|t|)
+relative2::-26:treat2  0.044740891 0.0061805362   7.238998 5.438105e-13
+relative2::-25:treat2  0.045748513 0.0060133091   7.607877 3.487937e-14
+relative2::-24:treat2  0.042871156 0.0056879469   7.537193 5.962793e-14
+relative2::-23:treat2  0.041250053 0.0052842006   7.806300 7.549689e-15
+relative2::-22:treat2  0.043115918 0.0053265589   8.094516 7.655085e-16
+relative2::-21:treat2  0.042267344 0.0051380019   8.226417 2.616971e-16
+relative2::-20:treat2  0.039553214 0.0047072873   8.402549 6.085773e-17
+relative2::-19:treat2  0.038604412 0.0045004289   8.577941 1.383603e-17
+relative2::-18:treat2  0.035447960 0.0042205448   8.398906 6.274030e-17
+relative2::-17:treat2  0.033635802 0.0039733083   8.465440 3.589857e-17
+relative2::-16:treat2  0.030301675 0.0035715590   8.484159 3.065734e-17
+relative2::-15:treat2  0.029838044 0.0034497378   8.649366 7.507069e-18
+relative2::-14:treat2  0.031626128 0.0033526887   9.433064 6.711693e-21
+relative2::-13:treat2  0.027475737 0.0029604936   9.280796 2.744656e-20
+relative2::-12:treat2  0.026842648 0.0028863865   9.299741 2.306170e-20
+relative2::-11:treat2  0.025849554 0.0027288437   9.472713 4.634905e-21
+relative2::-10:treat2  0.024831595 0.0026402792   9.404913 8.722001e-21
+relative2::-9:treat2   0.028693510 0.0024797989  11.570902 1.853219e-30
+relative2::-8:treat2   0.027201479 0.0023310430  11.669231 6.097562e-31
+relative2::-7:treat2   0.023069144 0.0020553943  11.223707 8.760409e-29
+relative2::-6:treat2   0.019103198 0.0017520142  10.903564 2.785935e-27
+relative2::-5:treat2   0.015464775 0.0015328090  10.089173 1.217092e-23
+relative2::-4:treat2   0.012238525 0.0013376394   9.149345 9.099955e-20
+relative2::-3:treat2   0.009042760 0.0011671067   7.748014 1.188029e-14
+relative2::-2:treat2   0.004722313 0.0007829257   6.031624 1.777458e-09
+relative2::0:treat2   -0.010371961 0.0012703574  -8.164600 4.336551e-16
+relative2::1:treat2   -0.015765352 0.0015944806  -9.887453 8.840165e-23
+relative2::2:treat2   -0.019664159 0.0018037688 -10.901707 2.841643e-27
+relative2::3:treat2   -0.022075154 0.0019529665 -11.303396 3.650192e-29
+relative2::4:treat2   -0.026058217 0.0021212740 -12.284230 4.796860e-34
+relative2::5:treat2   -0.029591600 0.0024402596 -12.126415 3.100351e-33
+relative2::6:treat2   -0.033081556 0.0025940475 -12.752872 1.652408e-36
+relative2::7:treat2   -0.036072738 0.0027646696 -13.047757 4.222896e-38
+relative2::8:treat2   -0.037725532 0.0028971089 -13.021786 5.850418e-38
+relative2::9:treat2   -0.038545906 0.0029622248 -13.012485 6.573978e-38
+relative2::10:treat2  -0.040187180 0.0030493731 -13.178833 8.075852e-39
+relative2::11:treat2  -0.043490725 0.0032511803 -13.376903 6.446103e-40
+relative2::12:treat2  -0.046465339 0.0034485153 -13.474013 1.843506e-40
+relative2::13:treat2  -0.049118871 0.0036781899 -13.354088 8.640012e-40
+relative2::14:treat2  -0.050757593 0.0037866222 -13.404452 4.523058e-40
+relative2::15:treat2  -0.055609888 0.0041208772 -13.494672 1.411004e-40
+relative2::16:treat2  -0.057307914 0.0044203427 -12.964586 1.197026e-37
+relative2::17:treat2  -0.055643408 0.0063889787  -8.709281 4.478491e-18
+relative2::18:treat2  -0.058060531 0.0074299160  -7.814426 7.085420e-15
+relative2::19:treat2  -0.055434748 0.0064408658  -8.606723 1.082065e-17
+attr(,"type")
+[1] "Clustered (player_id)"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>twfe.output1 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(twfe.output1)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>twfe.output1<span class="sc">$</span>Time <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">26</span><span class="sc">:-</span><span class="dv">2</span>),<span class="fu">c</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">19</span>))</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>p.twfe1 <span class="ot">&lt;-</span> <span class="fu">esplot</span>(twfe.output1,<span class="at">Period =</span> <span class="st">'Time'</span>,<span class="at">Estimate =</span> <span class="st">'Estimate'</span>,<span class="at">SE =</span> <span class="st">'Std. Error'</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">30</span>,<span class="dv">20</span>))</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>p.twfe1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="final_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="fect-treatment-2" class="level3">
+<h3 class="anchored" data-anchor-id="fect-treatment-2">FEct: Treatment 2</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>fect2 <span class="ot">=</span> <span class="fu">fect</span>(best_time <span class="sc">~</span> D2, <span class="at">data =</span> performance, <span class="at">index =</span> <span class="fu">c</span>(<span class="st">"player_id"</span>,<span class="st">"run_month"</span>), </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">method =</span> <span class="st">"ife"</span>, <span class="at">force =</span> <span class="st">"two-way"</span>,<span class="at">se =</span> <span class="cn">TRUE</span>, <span class="at">parallel =</span> <span class="cn">TRUE</span>, <span class="at">nboots =</span> <span class="dv">200</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Parallel computing ...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Bootstrapping for uncertainties ... </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>200 runs</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fect2, <span class="at">main =</span> <span class="st">"Estimated ATT"</span>, <span class="at">ylab =</span> <span class="st">"Effect of Affiliate Program"</span>, </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">cex.main =</span> <span class="fl">0.8</span>, <span class="at">cex.lab =</span> <span class="fl">0.8</span>, <span class="at">cex.axis =</span> <span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="final_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The aggregate ATT is displayed as follows.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fect2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+fect.formula(formula = best_time ~ D2, data = performance, index = c("player_id", 
+    "run_month"), force = "two-way", method = "ife", se = TRUE, 
+    nboots = 200, parallel = TRUE)
+
+ATT:
+                               ATT     S.E. CI.lower CI.upper p.value
+Tr obs equally weighted   -0.04331 0.002575 -0.04835 -0.03826       0
+Tr units equally weighted -0.04273 0.002421 -0.04747 -0.03798       0</code></pre>
+</div>
+</div>
+<p>The effect is larger than that estimated by TWFE.</p>
+</section>
+</section>
+<section id="discussion" class="level2">
+<h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
+<p>In this paper we explored the impact of a incentive program on Twitch on players’ game performance on a related website. The results show that after the program took effect, players’ game performance improve 4% on average. After players joined the incentive program there is an additional 4.3% increase in game performance. Therefore, we conclude that the incentive program launched on Twitch has a causal impact on game performance on Speedrun.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

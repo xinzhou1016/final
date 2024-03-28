@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>The impact of monetary incentive on player game performance</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="presentation_files/libs/clipboard/clipboard.min.js"></script>
+<script src="presentation_files/libs/quarto-html/quarto.js"></script>
+<script src="presentation_files/libs/quarto-html/popper.min.js"></script>
+<script src="presentation_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="presentation_files/libs/quarto-html/anchor.min.js"></script>
+<link href="presentation_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="presentation_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="presentation_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="presentation_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="presentation_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">The impact of monetary incentive on player game performance</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="empirical-context" class="level1">
+<h1>Empirical Context</h1>
+<section id="twitch" class="level2">
+<h2 class="anchored" data-anchor-id="twitch">Twitch</h2>
+<div class="incremental">
+<ul class="incremental">
+<li><p>Game live-streaming platform</p></li>
+<li><p>Twitch Affiliated Program</p></li>
+<li><p>Monetization opportunities</p></li>
+</ul>
+</div>
+</section>
+<section id="speedrun" class="level2">
+<h2 class="anchored" data-anchor-id="speedrun">Speedrun</h2>
+<div class="incremental">
+<ul class="incremental">
+<li><p>Players attempt to complete games as soon as possible</p></li>
+<li><p>Many records were created during live-streaming on Twitch</p></li>
+</ul>
+</div>
+</section>
+<section id="data-overview-speedrun1" class="level2">
+<h2 class="anchored" data-anchor-id="data-overview-speedrun1">Data Overview : Speedrun1</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>speedrun1 <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    player_id                   player_twitch_link
+       &lt;char&gt;                               &lt;char&gt;
+ 1:  xko2g798      https://www.twitch.tv/akuretaki
+ 2:  qjn1wzw8    https://www.twitch.tv/Otterstone1
+ 3:  1xy3wpwj         https://www.twitch.tv/dzLuci
+ 4:  8grm677x                                     
+ 5:  y8dzlz9j  https://www.twitch.tv/ShesChardcore
+ 6:  8qr5kvwj   https://www.twitch.tv/killerkun___
+ 7:  o86y93wj       https://www.twitch.tv/dlimes13
+ 8:  j51p0268          https://www.twitch.tv/act7_
+ 9:  jn36q61x https://www.twitch.tv/stathinfection
+10:  48g5vo7j                                     </code></pre>
+</div>
+</div>
+</section>
+<section id="data-overview-speedrun2" class="level2">
+<h2 class="anchored" data-anchor-id="data-overview-speedrun2">Data Overview : Speedrun2</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>speedrun2 <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    player_id   run_date run_time  game_id
+       &lt;char&gt;     &lt;IDat&gt;    &lt;num&gt;   &lt;char&gt;
+ 1:  y8dzlz9j 2021-03-27   56.287 268ezjo6
+ 2:  y8dzlz9j 2021-03-27   24.800 268ezjo6
+ 3:  jnz64r4j 2021-01-25   19.430 268ezjo6
+ 4:  kjpp1pkj 2020-02-15  575.960 268ezjo6
+ 5:  kjpp1pkj 2020-02-15  134.750 268ezjo6
+ 6:  kjpp1pkj 2020-02-15   45.210 268ezjo6
+ 7:  kjpp1pkj 2020-02-15   18.550 268ezjo6
+ 8:  kjpe6e5x 2019-12-09  176.300 268ezjo6
+ 9:  kjpe6e5x 2019-12-09   45.900 268ezjo6
+10:  kjpe6e5x 2019-12-09   21.300 268ezjo6</code></pre>
+</div>
+</div>
+</section>
+<section id="data-overview-twitch" class="level2">
+<h2 class="anchored" data-anchor-id="data-overview-twitch">Data Overview : Twitch</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>twitch <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 login broadcaster_type
+                &lt;char&gt;           &lt;char&gt;
+ 1:          akuretaki                 
+ 2:        otterstone1                 
+ 3:             dzluci                 
+ 4:      sheschardcore        affiliate
+ 5:       killerkun___                 
+ 6:           dlimes13          partner
+ 7:           nordanix                 
+ 8:     stathinfection                 
+ 9:              act7_                 
+10: felipenascimento83                 </code></pre>
+</div>
+</div>
+</section>
+<section id="data-overview-combined" class="level2">
+<h2 class="anchored" data-anchor-id="data-overview-combined">Data Overview: Combined</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>performance <span class="sc">%&gt;%</span> <span class="fu">select</span>(player_id, run_month, broadcaster_type, best_time_imputed, D1, D2) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    player_id  run_month broadcaster_type best_time_imputed    D1    D2
+       &lt;char&gt;     &lt;IDat&gt;           &lt;char&gt;             &lt;num&gt; &lt;int&gt; &lt;int&gt;
+ 1:  0jm02o81 2016-11-01        affiliate             13318     0     0
+ 2:  0jm02o81 2016-12-01        affiliate             13318     0     0
+ 3:  0jm02o81 2017-01-01        affiliate             13318     0     0
+ 4:  0jm02o81 2017-02-01        affiliate             13318     0     0
+ 5:  0jm02o81 2017-03-01        affiliate             13318     0     0
+ 6:  0jm02o81 2017-04-01        affiliate             13318     0     0
+ 7:  0jm02o81 2017-05-01        affiliate             13318     1     0
+ 8:  0jm02o81 2017-06-01        affiliate             13318     1     0
+ 9:  0jm02o81 2017-07-01        affiliate             13318     1     0
+10:  0jm02o81 2017-08-01        affiliate             13318     1     1</code></pre>
+</div>
+</div>
+</section>
+<section id="data-overview-combined-1" class="level2">
+<h2 class="anchored" data-anchor-id="data-overview-combined-1">Data Overview: Combined</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>performance <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(broadcaster_type) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n_distinct</span>(player_id))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  broadcaster_type     n
+  &lt;chr&gt;            &lt;int&gt;
+1 affiliate         2248
+2 non_twitch        1572</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(performance<span class="sc">$</span>run_month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        Min.      1st Qu.       Median         Mean      3rd Qu.         Max. 
+"2016-11-01" "2017-05-01" "2017-11-16" "2017-11-15" "2018-06-01" "2018-12-01" </code></pre>
+</div>
+</div>
+</section>
+<section id="treatment-1" class="level2">
+<h2 class="anchored" data-anchor-id="treatment-1">Treatment 1</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">panelview</span>(best_time_imputed <span class="sc">~</span> D1, <span class="at">data =</span> performance, <span class="at">index =</span> <span class="fu">c</span>(<span class="st">"player_id"</span>,<span class="st">"run_month"</span>), </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">xlab =</span> <span class="st">"Year-Month"</span>, <span class="at">ylab =</span> <span class="st">"player"</span>, <span class="at">display.all =</span> T,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">gridOff =</span> <span class="cn">TRUE</span>, <span class="at">by.timing =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Time is not evenly distributed (possibly due to missing data).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="presentation_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="treatment-2" class="level2">
+<h2 class="anchored" data-anchor-id="treatment-2">Treatment 2</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">panelview</span>(best_time_imputed <span class="sc">~</span> D2, <span class="at">data =</span> performance, <span class="at">index =</span> <span class="fu">c</span>(<span class="st">"player_id"</span>,<span class="st">"run_month"</span>), </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">xlab =</span> <span class="st">"Year-Month"</span>, <span class="at">ylab =</span> <span class="st">"player"</span>, <span class="at">display.all =</span> T,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">gridOff =</span> <span class="cn">TRUE</span>, <span class="at">by.timing =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Time is not evenly distributed (possibly due to missing data).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="presentation_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="descriptive-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="descriptive-analysis">Descriptive Analysis</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>top4_performance <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(game_specific, broadcaster_type, run_month) <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">best_time =</span> <span class="fu">mean</span>(best_time_imputed, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> run_month, <span class="at">y =</span> best_time, <span class="at">color =</span> broadcaster_type)) <span class="sc">+</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span>  <span class="co"># Increase line thickness</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>game_specific, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span>  <span class="co"># Allow each panel to have its own y scale if needed</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.numeric</span>(launch_date), <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span>  <span class="co"># Highlight the launch date</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span>  <span class="co"># Use a distinct color palette for clarity</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span>  <span class="co"># Use a clean theme with a larger base font size for readability</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Average Best Time by Game and Broadcaster Type"</span>,</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Includes a comparison across different months"</span>,</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Run Month"</span>,</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Average Best Time (seconds)"</span>,</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Broadcaster Type"</span>  <span class="co"># Label for the color legend</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>), </span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.background =</span> <span class="fu">element_blank</span>(), </span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">face =</span> <span class="st">"bold"</span>),  </span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"gray90"</span>, <span class="at">color =</span> <span class="cn">NA</span>) </span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'game_specific', 'broadcaster_type'. You
+can override using the `.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="presentation_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="treatment-1-twfe" class="level2">
+<h2 class="anchored" data-anchor-id="treatment-1-twfe">Treatment 1: TWFE</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|include: FALSE</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">$</span>treat1 <span class="ot">=</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(performance<span class="sc">$</span>login), <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">$</span>treat2 <span class="ot">=</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(performance<span class="sc">$</span>qualified1_month), <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>month <span class="ot">=</span> <span class="fu">as.data.frame</span>(<span class="fu">unique</span>(performance<span class="sc">$</span>run_month))</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(month) <span class="ot">=</span> <span class="st">"run_month"</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>month_t <span class="ot">=</span> month <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">t =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(month))</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>performance <span class="ot">=</span> performance <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(month_t, <span class="at">by =</span> <span class="st">"run_month"</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">$</span>E1 <span class="ot">=</span> <span class="dv">7</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>performance[performance<span class="sc">$</span>treat1 <span class="sc">==</span> <span class="dv">0</span>, <span class="st">"E1"</span>] <span class="ot">=</span><span class="dv">27</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">$</span>qualified1_month <span class="ot">=</span> <span class="fu">as.Date</span>(performance<span class="sc">$</span>qualified1_month)</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>performance <span class="ot">=</span> performance <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">time =</span> t)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>month_t<span class="sc">$</span>run_month <span class="ot">=</span> <span class="fu">as.Date</span>(month_t<span class="sc">$</span>run_month)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>performance <span class="ot">=</span> performance <span class="sc">%&gt;%</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(month_t, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"qualified1_month"</span> <span class="ot">=</span> <span class="st">"run_month"</span>)) <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">E2 =</span> t)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>performance[<span class="fu">is.na</span>(performance<span class="sc">$</span>E2), <span class="st">"E2"</span>] <span class="ot">=</span> <span class="dv">27</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">$</span>relative1 <span class="ot">=</span> performance<span class="sc">$</span>time <span class="sc">-</span> performance<span class="sc">$</span>E1</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">$</span>relative2 <span class="ot">=</span> performance<span class="sc">$</span>time <span class="sc">-</span> performance<span class="sc">$</span>E2</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>performance <span class="ot">=</span> performance <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(player_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">best_time =</span> best_time_imputed<span class="sc">/</span><span class="fu">max</span>(best_time_imputed))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">=</span> <span class="fu">feols</span>(best_time <span class="sc">~</span> D1<span class="sc">|</span>player_id <span class="sc">+</span> run_month, <span class="at">data =</span> performance)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>OLS estimation, Dep. Var.: best_time
+Observations: 99,320 
+Fixed-effects: player_id: 3,820,  run_month: 26
+Standard-errors: Clustered (player_id) 
+    Estimate Std. Error  t value  Pr(&gt;|t|)    
+D1 -0.041551   0.002557 -16.2525 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.057925     Adj. R2: 0.695925
+                 Within R2: 0.021641</code></pre>
+</div>
+</div>
+</section>
+<section id="treatment-1-dynamic-twfe" class="level2">
+<h2 class="anchored" data-anchor-id="treatment-1-dynamic-twfe">Treatment 1: Dynamic TWFE</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|include: FALSE</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>twfe.est <span class="ot">=</span> <span class="fu">feols</span>(best_time <span class="sc">~</span> <span class="fu">i</span>(relative1, treat1, <span class="at">ref =</span> <span class="sc">-</span><span class="dv">1</span>)<span class="sc">|</span>player_id <span class="sc">+</span> run_month, <span class="at">data =</span> performance, <span class="at">cluster =</span> <span class="st">"player_id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The variables 'relative1::-26:treat1', 'relative1::-25:treat1' and eighteen others have been removed because of collinearity (see $collin.var).</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>twfe.output <span class="ot">=</span> <span class="fu">as.matrix</span>(twfe.est<span class="sc">$</span>coeftable)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co">#print(twfe.output)</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>twfe.output <span class="ot">=</span> <span class="fu">as.data.frame</span>(twfe.output)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>twfe.output<span class="sc">$</span>Time <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">6</span><span class="sc">:-</span><span class="dv">2</span>),<span class="fu">c</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">19</span>))</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>p.twfe <span class="ot">=</span> <span class="fu">esplot</span>(twfe.output,<span class="at">Period =</span> <span class="st">'Time'</span>,<span class="at">Estimate =</span> <span class="st">'Estimate'</span>,<span class="at">SE =</span> <span class="st">'Std. Error'</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>,<span class="dv">20</span>))</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>p.twfe</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="presentation_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="treatment-1-fect-estimator" class="level2">
+<h2 class="anchored" data-anchor-id="treatment-1-fect-estimator">Treatment 1: FEct estimator</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>fect1 <span class="ot">=</span> <span class="fu">fect</span>(best_time <span class="sc">~</span> D1, <span class="at">data =</span> performance, <span class="at">index =</span> <span class="fu">c</span>(<span class="st">"player_id"</span>,<span class="st">"run_month"</span>), </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">method =</span> <span class="st">"ife"</span>, <span class="at">force =</span> <span class="st">"two-way"</span>,<span class="at">se =</span> <span class="cn">TRUE</span>, <span class="at">parallel =</span> <span class="cn">TRUE</span>, <span class="at">nboots =</span> <span class="dv">200</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Parallel computing ...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Bootstrapping for uncertainties ... </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>200 runs</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Cannot use full pre-treatment periods in the F test. The first period is removed.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fect1, <span class="at">main =</span> <span class="st">"Estimated ATT"</span>, <span class="at">ylab =</span> <span class="st">"Effect of Affiliate Program"</span>, </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">cex.main =</span> <span class="fl">0.8</span>, <span class="at">cex.lab =</span> <span class="fl">0.8</span>, <span class="at">cex.axis =</span> <span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="presentation_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="treatment-1-fect-estimator-1" class="level2">
+<h2 class="anchored" data-anchor-id="treatment-1-fect-estimator-1">Treatment 1: FEct estimator</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fect1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+fect.formula(formula = best_time ~ D1, data = performance, index = c("player_id", 
+    "run_month"), force = "two-way", method = "ife", se = TRUE, 
+    nboots = 200, parallel = TRUE)
+
+ATT:
+                               ATT     S.E. CI.lower CI.upper p.value
+Tr obs equally weighted   -0.04155 0.002644 -0.04673 -0.03637       0
+Tr units equally weighted -0.04155 0.002644 -0.04673 -0.03637       0</code></pre>
+</div>
+</div>
+</section>
+<section id="treatment-2-twfe" class="level2">
+<h2 class="anchored" data-anchor-id="treatment-2-twfe">Treatment 2: TWFE</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">=</span> <span class="fu">feols</span>(best_time <span class="sc">~</span> D2<span class="sc">|</span>player_id <span class="sc">+</span> run_month <span class="sc">+</span> game_specific, <span class="at">data =</span> performance)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>OLS estimation, Dep. Var.: best_time
+Observations: 99,320 
+Fixed-effects: player_id: 3,820,  run_month: 26,  game_specific: 2,381
+Standard-errors: Clustered (player_id) 
+    Estimate Std. Error  t value  Pr(&gt;|t|)    
+D2 -0.039933   0.002525 -15.8133 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.057641     Adj. R2: 0.691199
+                 Within R2: 0.031204</code></pre>
+</div>
+</div>
+</section>
+<section id="treatment-2-dynamic-twfe" class="level2">
+<h2 class="anchored" data-anchor-id="treatment-2-dynamic-twfe">Treatment 2: Dynamic TWFE</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>twfe.est1 <span class="ot">=</span> <span class="fu">feols</span>(best_time <span class="sc">~</span> <span class="fu">i</span>(relative2, treat2, <span class="at">ref =</span> <span class="sc">-</span><span class="dv">1</span>)<span class="sc">|</span>player_id <span class="sc">+</span> run_month, <span class="at">data =</span> performance, <span class="at">cluster =</span> <span class="st">"player_id"</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>twfe.output1 <span class="ot">=</span> <span class="fu">as.matrix</span>(twfe.est1<span class="sc">$</span>coeftable)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co">#print(twfe.output1)</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>twfe.output1 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(twfe.output1)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>twfe.output1<span class="sc">$</span>Time <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">26</span><span class="sc">:-</span><span class="dv">2</span>),<span class="fu">c</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">19</span>))</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>p.twfe1 <span class="ot">&lt;-</span> <span class="fu">esplot</span>(twfe.output1,<span class="at">Period =</span> <span class="st">'Time'</span>,<span class="at">Estimate =</span> <span class="st">'Estimate'</span>,<span class="at">SE =</span> <span class="st">'Std. Error'</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">30</span>,<span class="dv">20</span>))</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>p.twfe1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="presentation_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="treatment-2-fect-estimator" class="level2">
+<h2 class="anchored" data-anchor-id="treatment-2-fect-estimator">Treatment 2: FEct estimator</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>fect2 <span class="ot">=</span> <span class="fu">fect</span>(best_time <span class="sc">~</span> D2, <span class="at">data =</span> performance, <span class="at">index =</span> <span class="fu">c</span>(<span class="st">"player_id"</span>,<span class="st">"run_month"</span>), </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">method =</span> <span class="st">"ife"</span>, <span class="at">force =</span> <span class="st">"two-way"</span>,<span class="at">se =</span> <span class="cn">TRUE</span>, <span class="at">parallel =</span> <span class="cn">TRUE</span>, <span class="at">nboots =</span> <span class="dv">200</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Parallel computing ...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Bootstrapping for uncertainties ... </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>200 runs</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fect2, <span class="at">main =</span> <span class="st">"Estimated ATT"</span>, <span class="at">ylab =</span> <span class="st">"Effect of Affiliate Program"</span>, </span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">cex.main =</span> <span class="fl">0.8</span>, <span class="at">cex.lab =</span> <span class="fl">0.8</span>, <span class="at">cex.axis =</span> <span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="presentation_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="fect-estimator-treatment-2" class="level2">
+<h2 class="anchored" data-anchor-id="fect-estimator-treatment-2">FEct Estimator: Treatment 2</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fect2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+fect.formula(formula = best_time ~ D2, data = performance, index = c("player_id", 
+    "run_month"), force = "two-way", method = "ife", se = TRUE, 
+    nboots = 200, parallel = TRUE)
+
+ATT:
+                               ATT     S.E. CI.lower CI.upper p.value
+Tr obs equally weighted   -0.04331 0.002751 -0.04870 -0.03791       0
+Tr units equally weighted -0.04273 0.002604 -0.04783 -0.03762       0</code></pre>
+</div>
+</div>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<ul>
+<li><p>After the program took effect, players’ game performance improve 4% on average.</p></li>
+<li><p>After players joined the incentive program there is an additional 4.3% increase in game performance</p></li>
+</ul>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
